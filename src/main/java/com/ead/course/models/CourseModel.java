@@ -1,7 +1,7 @@
 package com.ead.course.models;
 
 import com.ead.course.enums.CourseStatus;
-import com.ead.course.enums.CouseLevel;
+import com.ead.course.enums.CourseLevel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -59,10 +59,10 @@ public class CourseModel implements Serializable {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private CouseLevel couseLevel;
+    private CourseLevel courseLevel;
 
     @Column(nullable = false)
-    private UUID userInstrutor;
+    private UUID userInstructor;
 
     @Column(length = 255)
     private String imageUrl;
