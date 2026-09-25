@@ -1,6 +1,6 @@
 package com.ead.course.services.impl;
 
-import com.ead.course.repositores.LessonRepository;
+import com.ead.course.repositories.LessonRepository;
 import com.ead.course.services.LessobService;
 import org.springframework.stereotype.Service;
 

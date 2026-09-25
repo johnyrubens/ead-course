@@ -58,6 +58,4 @@ public class CourseController {
                 .body(courseService.update(courseRecordDto, courseService.findById(courseId).get()));
     }
 
-
-
 }
