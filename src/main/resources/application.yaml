@@ -5,9 +5,9 @@ server:
 
 spring:
   datasource:
-    url:  jdbc:postgresql://localhost:5432/ead-course
-    username: postgres
-    password: banco123
+    url:  jdbc:postgresql://localhost:5432/ead_courses_db
+    username: ead_user
+    password: Ead@2027!
   jpa:
     hibernate:
       ddl-auto: update
