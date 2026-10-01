@@ -1,6 +1,7 @@
 package com.ead.course.services.impl;
 
 import com.ead.course.dtos.CourseRecordDto;
+import com.ead.course.exceptions.NotFoundException;
 import com.ead.course.models.CourseModel;
 import com.ead.course.models.LessonModel;
 import com.ead.course.models.ModuleModel;
@@ -62,7 +63,7 @@ public class CourseServiceImpl implements CourseService {
     public Optional<CourseModel> findById(UUID courseId) {
         Optional<CourseModel> courseModelOptional = courseRepository.findById(courseId);
         if (courseModelOptional.isEmpty()) {
-            //
+            throw new NotFoundException("Erro: Course not found");
         }
         return courseModelOptional;
     }
@@ -71,7 +72,6 @@ public class CourseServiceImpl implements CourseService {
     public CourseModel update(CourseRecordDto courseRecordDto, CourseModel courseModel) {
         BeanUtils.copyProperties(courseRecordDto, courseModel);
         courseModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
-        System.out.println(LocalDateTime.now(ZoneId.of("UTC")));
         return courseRepository.save(courseModel);
     }
 
