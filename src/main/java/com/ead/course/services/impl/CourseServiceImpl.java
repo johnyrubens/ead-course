@@ -36,7 +36,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseModel save(CourseRecordDto courseRecordDto) {
         var courseModel = new CourseModel();
         BeanUtils.copyProperties(courseRecordDto, courseModel);
-        courseModel.setCreeationDate(LocalDateTime.now(ZoneId.of("UTC")));
+        courseModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
         courseModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
         return courseRepository.save(courseModel);
     }

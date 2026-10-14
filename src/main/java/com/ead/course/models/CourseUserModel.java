@@ -25,7 +25,7 @@ public class CourseUserModel {
     private UUID id;
 
     @Column(nullable = false)
-    private UUID courseId;
+    private UUID userId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private CourseModel course;

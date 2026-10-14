@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,8 +42,16 @@ public class ModuleController {
     public ResponseEntity<Page<ModuleModel>> getAllModules(@PathVariable(value = "courseId") UUID courseId,
                                                            SpecificationTemplate.ModuleSpec spec,
                                                            Pageable pageable){
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(moduleService.findAllModulesIntoCourse(SpecificationTemplate.moduleCourseId(courseId).and(spec), pageable));
+
+        Specification<ModuleModel> filters =
+                SpecificationTemplate.moduleCourseId(courseId);
+
+        if (spec != null) {
+            filters = filters.and(spec);
+        }
+
+        return ResponseEntity.ok(
+                moduleService.findAllModulesIntoCourse(filters, pageable));
     }
 
 
