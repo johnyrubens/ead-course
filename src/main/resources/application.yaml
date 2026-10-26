@@ -17,3 +17,11 @@ spring:
         jdbc:
           lob:
             non-contextual-creation: true
+  output:
+    ansi:
+      enabled: Always
+
+ead:
+  api:
+    url:
+      authuser: 'http://localhost:8087/ead-authuser'

@@ -9,11 +9,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.UUID;
 
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "TB_COURSES_USERS")
 @Entity
