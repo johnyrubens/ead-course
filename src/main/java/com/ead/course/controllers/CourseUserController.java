@@ -53,7 +53,7 @@ public class CourseUserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Subscription is blocked");
         }
 
-        CourseUserModel courseUserModel = courseUserService.saveSubscriptionUserInCourse(
+        CourseUserModel courseUserModel = courseUserService.saveAndSendSubscriptionUserInCourse(
                 optionalCourseModel.get().convertToCourseUserModel(subscriptionRecordDto.userId())
         );
 
