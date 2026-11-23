@@ -1,11 +1,14 @@
 package com.ead.course.services.impl;
 
+import com.ead.course.clients.AuthUserClient;
 import com.ead.course.dtos.CourseRecordDto;
 import com.ead.course.exceptions.NotFoundException;
 import com.ead.course.models.CourseModel;
+import com.ead.course.models.CourseUserModel;
 import com.ead.course.models.LessonModel;
 import com.ead.course.models.ModuleModel;
 import com.ead.course.repositories.CourseRepository;
+import com.ead.course.repositories.CourseUserRepository;
 import com.ead.course.repositories.LessonRepository;
 import com.ead.course.repositories.ModuleRepository;
 import com.ead.course.services.CourseService;
@@ -31,6 +34,8 @@ public class CourseServiceImpl implements CourseService {
     final CourseRepository courseRepository;
     final ModuleRepository moduleRepository;
     final LessonRepository lessonRepository;
+    final CourseUserRepository courseUserRepository;
+    final AuthUserClient  authUserClient;
 
     @Override
     public CourseModel save(CourseRecordDto courseRecordDto) {
@@ -50,13 +55,26 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     @Override
     public void delete(CourseModel course) {
+        boolean deleteCourseUserInAuthUser = false;
         List<ModuleModel> moduleModelList = moduleRepository.findAllModulesIntoCourse(course.getCourseId());
         for (ModuleModel module : moduleModelList) {
             List<LessonModel> lessonModelList = lessonRepository.findAllLessonsIntoModule(module.getModuleId());
             lessonRepository.deleteAll(lessonModelList);
         }
         moduleRepository.deleteAll(moduleModelList);
+
+        List<CourseUserModel> courseUserModelList = courseUserRepository.findAllCourseUserIntoCourse(course.getCourseId());
+        if (!courseUserModelList.isEmpty()) {
+            courseUserRepository.deleteAll(courseUserModelList);
+            deleteCourseUserInAuthUser = true;
+        }
+
         courseRepository.delete(course);
+        if (deleteCourseUserInAuthUser) {
+            authUserClient.deleteCourseUserInAuthUser(course.getCourseId());
+        }
+
+
     }
 
     public Page<CourseModel>findAll(Specification<CourseModel> spec, Pageable pageable) {

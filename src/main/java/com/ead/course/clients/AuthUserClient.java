@@ -65,7 +65,7 @@ public class AuthUserClient {
     }
 
     public void postSubscriptionUserInCourse(UUID courseId, UUID userId) {
-        String url = baseUrlAuthuser + "/users/" + userId + "courses/subscritpion";
+        String url = baseUrlAuthuser + "/users/" + userId + "/courses/subscritpion";
         logger.debug("Request URL: {} ", url);
 
         try {
@@ -80,6 +80,20 @@ public class AuthUserClient {
         } catch (RestClientException e) {
             logger.error("Error Request POST RestClient with cause: {} ", e.getMessage());
             throw new RuntimeException("Error Request POST RestClient", e);
+        }
+    }
+
+    public void deleteCourseUserInAuthUser(UUID courseId) {
+        String url = baseUrlAuthuser + "/users/courses" + courseId;
+
+        try {
+            restClient.delete()
+                    .uri(url)
+                    .retrieve()
+                    .toBodilessEntity();
+        } catch (RestClientException e) {
+            logger.error("Error Request DELETE RestClient with cause: {} ", e.getMessage());
+            throw new RuntimeException("Error Request DELETE RestClient", e);
         }
     }
 
