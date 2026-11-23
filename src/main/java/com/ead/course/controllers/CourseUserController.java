@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +37,7 @@ public class CourseUserController {
     @GetMapping("/courses/{courseId}/users")
     public ResponseEntity<Page<UserRecordDto>> getAllUsersByCourse(@PageableDefault(sort = "userId", direction = Sort.Direction.ASC) Pageable pageable,
                                                                    @PathVariable(value = "courseId") UUID courseId){
+        courseService.findById(courseId);
         return ResponseEntity.status(HttpStatus.OK).body(authUserClient.getAllUsersByCourse(courseId, pageable));
     }
 
@@ -53,11 +55,13 @@ public class CourseUserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Subscription is blocked");
         }
 
+
         CourseUserModel courseUserModel = courseUserService.saveAndSendSubscriptionUserInCourse(
                 optionalCourseModel.get().convertToCourseUserModel(subscriptionRecordDto.userId())
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(courseUserModel);
     }
+
 
 }

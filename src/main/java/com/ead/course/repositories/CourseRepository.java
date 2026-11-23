@@ -10,4 +10,6 @@ public interface CourseRepository extends JpaRepository<CourseModel, UUID>,
                                           JpaSpecificationExecutor<CourseModel> {
 
     boolean existsByName(String name);
+
+
 }
